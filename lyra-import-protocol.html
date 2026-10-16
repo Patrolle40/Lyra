@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lyra Import Protocol v1</title><style>body{background:#111318;color:#eee;font:16px system-ui;max-width:760px;margin:32px auto;padding:16px}pre{overflow:auto;background:#24272c;padding:14px;border-radius:9px}a{color:#e9bd6e}</style><h1>Lyra Import Protocol v1</h1><p>Compatible apps use offline Android Intents and Activity Results. No internet is required.</p><h2>Exported Activity</h2><pre>&lt;activity android:name=".LyraExportActivity" android:exported="true"&gt;
+  &lt;intent-filter&gt;
+    &lt;action android:name="com.lyra.app.action.PICK_SONG" /&gt;
+    &lt;category android:name="android.intent.category.DEFAULT" /&gt;
+  &lt;/intent-filter&gt;
+&lt;/activity&gt;</pre><h2>Return audio URI</h2><pre>Intent result = new Intent();
+result.setData(audioUri);
+result.putExtra(Intent.EXTRA_STREAM, audioUri);
+result.setClipData(ClipData.newUri(getContentResolver(), "Audio", audioUri));
+result.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+setResult(Activity.RESULT_OK, result);
+finish();</pre><p>Use a valid content URI accessible to Lyra, from Android's file picker or FileProvider. On cancel, return RESULT_CANCELED.</p><p>A successful connection test only detects the action, not a complete audio transfer.</p><p><a href="index.html">Back to Lyra</a></p></html>
